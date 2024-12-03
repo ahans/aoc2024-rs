@@ -1,18 +1,19 @@
-fn safe(levels: &[u8; 8]) -> bool {
+fn safe(levels: &[u8; 8], num_levels: usize) -> bool {
     let mut valid = true;
-    let mut n = 1;
     let mut i = 0;
     let mut j = 1;
 
-    while j < 8 && levels[j] != 0 {
+    while j < num_levels  {
         let diff = levels[j] as i32 - levels[i] as i32;
         if diff < 1 || diff > 3 {
             valid = false;
         }
         i += 1;
         j += 1;
-        n += 1;
     }
+
+    let n = num_levels;
+
 
     if valid {
         return true;
@@ -46,7 +47,7 @@ pub fn part1(s: &str) -> i32 {
         match ch {
             ' ' => num_levels += 1,
             '\n' => {
-                if safe(&levels) {
+                if safe(&levels, num_levels + 1) {
                     n += 1;
                 }
                 num_levels = 0;
@@ -58,7 +59,7 @@ pub fn part1(s: &str) -> i32 {
         }
     }
 
-    if num_levels > 0 && safe(&levels) {
+    if num_levels > 0 && safe(&levels, num_levels + 1) {
         n += 1;
     }
 
@@ -75,7 +76,7 @@ pub fn part2(s: &str) -> i32 {
         match ch {
             ' ' => num_levels += 1,
             '\n' => {
-                if safe(&levels) {
+                if safe(&levels, num_levels + 1) {
                     n += 1;
                 } else {
                     for i in 0..8 {
@@ -92,7 +93,7 @@ pub fn part2(s: &str) -> i32 {
                             }
                         }
                         
-                        if safe(&l2) {
+                        if safe(&l2, wt) {
                             n += 1;
                             break;
                         }
@@ -109,7 +110,7 @@ pub fn part2(s: &str) -> i32 {
     }
 
     if num_levels > 0 {
-        if safe(&levels) {
+        if safe(&levels, num_levels + 1) {
             n += 1;
         } else {
             for i in 0..8 {
@@ -126,7 +127,7 @@ pub fn part2(s: &str) -> i32 {
                     }
                 }
                 
-                if safe(&l2) {
+                if safe(&l2, wt) {
                     n += 1;
                     break;
                 }
