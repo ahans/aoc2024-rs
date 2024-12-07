@@ -55,7 +55,7 @@ pub fn part2(input: &str) -> i32 {
     let mut i = offset;
     let s = input.as_bytes();
     while i < s.len() {
-        let mut a = (s[i] - b'0') * 10 + (s[i + 1] - b'0');
+        let a = (s[i] - b'0') * 10 + (s[i + 1] - b'0');
         i += 2;
         let mut nums = Vec::with_capacity(32);
         nums.push(a);
