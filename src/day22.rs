@@ -9,14 +9,14 @@ pub fn part1(input: &str) -> u64 {
         .collect();
 
     numbers
-        .par_chunks(4)
+        .par_chunks(8)
         .map(|chunk| {
-            if chunk.len() == 4 {
-                let mut v4 = u32x4::from_slice(chunk);
+            if chunk.len() == 8 {
+                let mut v4 = u32x8::from_slice(chunk);
                 for _ in 0..2000 {
-                    v4 = (v4 ^ (v4 << u32x4::splat(6))) & u32x4::splat(0xffffff);
-                    v4 = (v4 ^ (v4 >> u32x4::splat(5))) & u32x4::splat(0xffffff);
-                    v4 = (v4 ^ (v4 << u32x4::splat(11))) & u32x4::splat(0xffffff);
+                    v4 = (v4 ^ (v4 << u32x8::splat(6))) & u32x8::splat(0xffffff);
+                    v4 = (v4 ^ (v4 >> u32x8::splat(5))) & u32x8::splat(0xffffff);
+                    v4 = (v4 ^ (v4 << u32x8::splat(11))) & u32x8::splat(0xffffff);
                 }
                 v4.reduce_sum() as u64
             } else {
