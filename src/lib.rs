@@ -1,4 +1,5 @@
 #![feature(portable_simd)]
+#![feature(avx512_target_feature)]
 #![feature(adt_const_params)]
 
 extern crate aoc_runner;
@@ -14,6 +15,7 @@ pub mod day14;
 pub mod day2;
 pub mod day21;
 pub mod day22;
+pub mod day25;
 pub mod day3;
 pub mod day4;
 pub mod day5;
