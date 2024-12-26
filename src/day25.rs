@@ -12,17 +12,15 @@ unsafe fn solve(input: &str) -> u32 {
     let mut keys = Vec::with_capacity(250);
     let s = input.as_bytes();
     let mut i = 0;
-    unsafe {
-        while i < input.len() {
-            let is_lock = s[i] == b'#';
-            let values = u8x32::from_slice(&s[i + 6..i + 6 + 32]);
-            i += 6 + 36 + 1;
-            let mask = values.simd_eq(u8x32::splat(b'#'));
-            if is_lock {
-                locks.push(mask.to_bitmask() as u32);
-            } else {
-                keys.push(mask.to_bitmask() as u32);
-            }
+    while i < input.len() {
+        let is_lock = s[i] == b'#';
+        let values = u8x32::from_slice(&s[i + 6..i + 6 + 32]);
+        i += 6 + 36 + 1;
+        let mask = values.simd_eq(u8x32::splat(b'#'));
+        if is_lock {
+            locks.push(mask.to_bitmask() as u32);
+        } else {
+            keys.push(mask.to_bitmask() as u32);
         }
     }
     for _ in 0..(keys.len() / 16 + 1) * 16 - keys.len() {
